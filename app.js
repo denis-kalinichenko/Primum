@@ -4,9 +4,60 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose').Mongoose;
-var db = mongoose.connect('mongodb://localhost/test');
-var Document = require('./models.js').Document(db);
+
+
+var mongodb = require('mongodb');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+
+    var movieSchema = new mongoose.Schema({
+        title: { type: String },
+        rating: String,
+        releaseYear: Number,
+        hasCreditCookie: Boolean
+    });
+
+    var Movie = mongoose.model('Movie', movieSchema);
+
+    var thor = new Movie({
+        title: 'Thor',
+        rating: 'PG-13',
+        releaseYear: '2011',  // Notice the use of a String rather than a Number - Mongoose will automatically convert this for us.
+        hasCreditCookie: true
+    });
+
+    thor.save(function(err, thor) {
+        if (err) return console.error(err);
+    });
+
+    // Find a single movie by name.
+    Movie.findOne({ title: 'Thor' }, function(err, thor) {
+        if (err) return console.error(err);
+        console.dir(thor);
+    });
+
+    // Find all movies.
+    Movie.find(function(err, movies) {
+        if (err) return console.error(err);
+        console.dir(movies);
+    });
+
+    // Find all movies that have a credit cookie.
+    Movie.find({ hasCreditCookie: true }, function(err, movies) {
+        if (err) return console.error(err);
+        console.dir(movies);
+    });
+
+
+});
+
+
+
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
