@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var validator = require('validator');
 
 
 var mongodb = require('mongodb');
@@ -54,9 +55,6 @@ db.once('open', function (callback) {
 
 
 });
-
-
-
 
 
 var routes = require('./routes/index');
