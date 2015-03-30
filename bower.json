@@ -1,0 +1,25 @@
+{
+  "name": "Primum",
+  "version": "0.0.1",
+  "homepage": "https://github.com/denis-kalinichenko/Primum",
+  "authors": [
+    "Denis Kalinichenko <d.kalinichenkooo@gmail.com>"
+  ],
+  "description": "Messenger",
+  "main": "public/css/main.scss",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "validator-js": "~3.37.0"
+  }
+}
