@@ -7,57 +7,19 @@ var bodyParser = require('body-parser');
 var validator = require('validator');
 
 
+
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
-mongoose.connect('mongodb://localhost/users');
-
+mongoose.connect('mongodb://localhost/primum');
 var db = mongoose.connection;
 autoIncrement.initialize(db);
+var models = require('./models')(mongoose, autoIncrement);
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function (callback) {
+var velvet = new models.Users({'username':'Velvet'});
 
-    var movieSchema = new mongoose.Schema({
-        title: { type: String },
-        rating: String,
-        releaseYear: Number,
-        hasCreditCookie: Boolean
-    });
-
-    movieSchema.plugin(autoIncrement.plugin, { model: 'Movie', field: 'movie_id' });
-
-    var Movie = mongoose.model('Movie', movieSchema);
-
-    var thor = new Movie({
-        title: 'Thor',
-        rating: 'PG-13',
-        releaseYear: '2011',
-        hasCreditCookie: true
-    });
-
-    thor.save(function(err, thor) {
-        if (err) return console.error(err);
-    });
-
-    // Find a single movie by name.
-    Movie.findOne({ title: 'Thor' }, function(err, thor) {
-        if (err) return console.error(err);
-        console.dir(thor);
-    });
-
-    // Find all movies.
-    Movie.find(function(err, movies) {
-        if (err) return console.error(err);
-        console.dir(movies);
-    });
-
-    // Find all movies that have a credit cookie.
-    Movie.find({ hasCreditCookie: true }, function(err, movies) {
-        if (err) return console.error(err);
-        console.dir(movies);
-    });
-
+velvet.save(function(err, velvet) {
+    if (err) return console.error(err);
 });
 
 
