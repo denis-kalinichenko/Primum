@@ -9,9 +9,12 @@ var validator = require('validator');
 
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+var autoIncrement = require('mongoose-auto-increment');
+mongoose.connect('mongodb://localhost/users');
 
 var db = mongoose.connection;
+autoIncrement.initialize(db);
+
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
 
@@ -22,12 +25,14 @@ db.once('open', function (callback) {
         hasCreditCookie: Boolean
     });
 
+    movieSchema.plugin(autoIncrement.plugin, { model: 'Movie', field: 'movie_id' });
+
     var Movie = mongoose.model('Movie', movieSchema);
 
     var thor = new Movie({
         title: 'Thor',
         rating: 'PG-13',
-        releaseYear: '2011',  // Notice the use of a String rather than a Number - Mongoose will automatically convert this for us.
+        releaseYear: '2011',
         hasCreditCookie: true
     });
 
@@ -52,7 +57,6 @@ db.once('open', function (callback) {
         if (err) return console.error(err);
         console.dir(movies);
     });
-
 
 });
 
