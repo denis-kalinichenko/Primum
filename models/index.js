@@ -11,6 +11,15 @@ module.exports = function(mongoose, autoIncrement) {
             valid: Boolean
         },
         sex: Number,
+        userpic: {
+            small: String,
+            medium: String,
+            origin: String
+        },
+        activity: {
+            last_seen: Date,
+            deleted: { type: Boolean, default: false }
+        },
         reg: Date
     });
     userSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'user_id' });

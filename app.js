@@ -6,7 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var validator = require('validator');
 
-
+var conf = require('./conf');
+console.log(conf.APP_NAME);
 
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
@@ -16,15 +17,28 @@ var db = mongoose.connection;
 autoIncrement.initialize(db);
 var models = require('./models')(mongoose, autoIncrement);
 
-var velvet = new models.Users({'username':'Velvet'});
+var new_user = new models.Users({
+    'username': 'kalinichenk0',
+    name: {
+        first: "Denis",
+        last: "Kalinichenko"
+    },
+    birthday: new Date('06.02.1996').toISOString(),
+    email: {
+        main: "kalini4enk0@ya.ru",
+        valid: false
+    },
+    sex: 1,
+    reg: new Date()
+});
 
-velvet.save(function(err, velvet) {
+new_user.save(function(err, new_user) {
     if (err) return console.error(err);
 });
 
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var register = require('./routes/register');
 
 var app = express();
 
@@ -45,7 +59,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/register', register);
 
 io.on('connection', function(socket){
     console.log('a user connected');
