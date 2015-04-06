@@ -20,12 +20,19 @@ module.exports = function(mongoose, autoIncrement) {
             last_seen: Date,
             deleted: { type: Boolean, default: false }
         },
-        reg: Date
+        reg: Date,
+        password: String
     });
-    userSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'user_id' });
+    userSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'user_id', startAt: 1 });
 
+    var validSchema = new mongoose.Schema({
+        user_id: Number,
+        email: String,
+        key: String
+    });
     var models = {
-        Users : mongoose.model('User', userSchema)
+        Users : mongoose.model('User', userSchema),
+        Valids : mongoose.model('Valid', validSchema)
     };
 
     return models;

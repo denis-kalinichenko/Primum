@@ -4,37 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var validator = require('validator');
 
 var conf = require('./conf');
-console.log(conf.APP_NAME);
-
-var mongodb = require('mongodb');
-var mongoose = require('mongoose');
-var autoIncrement = require('mongoose-auto-increment');
-mongoose.connect('mongodb://localhost/primum');
-var db = mongoose.connection;
-autoIncrement.initialize(db);
-var models = require('./models')(mongoose, autoIncrement);
-
-var new_user = new models.Users({
-    'username': 'kalinichenk0',
-    name: {
-        first: "Denis",
-        last: "Kalinichenko"
-    },
-    birthday: new Date('06.02.1996').toISOString(),
-    email: {
-        main: "kalini4enk0@ya.ru",
-        valid: false
-    },
-    sex: 1,
-    reg: new Date()
-});
-
-new_user.save(function(err, new_user) {
-    if (err) return console.error(err);
-});
 
 
 var routes = require('./routes/index');
@@ -83,6 +54,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+  app.locals.pretty = true;
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {

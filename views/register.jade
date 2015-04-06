@@ -1,5 +1,31 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1= conf.APP_NAME
+  p= title
+  form(action='', method='post')
+    .form-group
+      label(for='login') Enter login
+      input(type='text', name='login', id='login', placeholder='Enter login', required).form-control
+    .form-group
+      label(for='first_name') Enter first name
+      input(type='text', name='first_name', id='first_name', placeholder='Enter first name', required).form-control
+    .form-group
+      label(for='last_name') Enter last name
+      input(type='text', name='last_name', id='last_name', placeholder='Enter last name', required).form-control
+    .form-group
+      label(for='email') Enter email
+      input(type='email', name='email', id='email', placeholder='Enter email', required).form-control
+    .form-group
+      label(for='birthday') Enter birthday
+      input(type='datetime-local', name='birthday', id='birthday', placeholder='Enter birthday', required).form-control
+    .form-group
+      label(for='sex') Enter sex
+      select(name="sex", id="sex", required).form-control Sex
+        option(value="0") choose
+        option(value="1") male
+        option(value="2") female
+    .form-group
+      label(for='password') Enter password
+      input(type='password', name='password', id='password', placeholder='Enter password', required).form-control
+    button(type='submit').btn.btn-danger Register
