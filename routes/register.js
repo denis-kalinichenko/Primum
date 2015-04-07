@@ -50,7 +50,7 @@ router.get('/', function(req, res, next) {
         from: conf.APP_NAME + '<'+conf.MAIL.user+'>',
         to: req.body.email,
         subject: 'Registration', //TODO global dictionary
-        html: '<b>Hello,</b> <br/>please, verify your e-mail address ' + req.body.email +'<br/>' +
+        html: '<b>Hello, '+new_user.name.first+'</b> <br/>please, verify your e-mail address ' + req.body.email +'<br/>' +
         'Click the link: <a href="'+valid_url+'">'+valid_url+'</a>' //TODO e-mail templates
       };
 

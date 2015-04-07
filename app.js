@@ -1,4 +1,5 @@
 var express = require('express');
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -10,6 +11,7 @@ var conf = require('./conf');
 
 var routes = require('./routes/index');
 var register = require('./routes/register');
+var login = require('./routes/login');
 
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
@@ -44,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/register', register);
+app.use('/login', login);
 
 /*io.on('connection', function(socket){
     console.log('a user connected');

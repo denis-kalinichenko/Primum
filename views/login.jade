@@ -1,0 +1,15 @@
+//
+   Created by Denis on 2015-04-07.
+
+extends layout
+block content
+   h1= conf.APP_NAME
+   p= title
+   form(action='', method='post')
+      .form-group
+         label(for='login') Enter login
+         input(type='text', name='login', id='login', placeholder='Enter login', required).form-control
+      .form-group
+         label(for='password') Enter password
+         input(type='password', name='password', id='password', placeholder='Enter password', required).form-control
+      button(type='submit').btn.btn-danger Login
