@@ -11,10 +11,23 @@ var conf = require('./conf');
 var routes = require('./routes/index');
 var register = require('./routes/register');
 
+var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
+mongoose.connect('mongodb://localhost/primum', function(err) {
+    if(err) {
+        console.log('connection error', err);
+    } else {
+        var db = mongoose.connection;
+        autoIncrement.initialize(db);
+    }
+});
+
+
 var app = express();
 
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+//var io = require('socket.io')(http);
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,12 +45,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/register', register);
 
-io.on('connection', function(socket){
+/*io.on('connection', function(socket){
     console.log('a user connected');
     socket.on('disconnect', function(){
         console.log('user disconnected');
     });
-});
+});*/
 http.listen(80, function(){
     console.log('listening on *:80');
 });

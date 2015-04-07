@@ -1,16 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var md5 = require('MD5');
-var mongoose = require('mongoose');
-var autoIncrement = require('mongoose-auto-increment');
-mongoose.connect('mongodb://localhost/primum');
-var db = mongoose.connection;
-autoIncrement.initialize(db);
-var models = require('../models')(mongoose, autoIncrement);
-var conf = require('../conf');
 
+var mongoose = require('mongoose');
+var md5 = require('MD5');
+var conf = require('../conf');
 var randomstring = require("randomstring");
 var nodemailer = require('nodemailer');
+
+var User = require('../models/user.js');
+
+
 var transporter = nodemailer.createTransport({
   service: conf.MAIL.service,
   auth: {
@@ -25,7 +24,7 @@ router.get('/', function(req, res, next) {
 
     // all data ok!
     var email_key = randomstring.generate();
-    var new_user = new models.Users({
+    var new_user = new User ({
     'username': req.body.login,
     name: {
       first: req.body.first_name,
@@ -45,7 +44,7 @@ router.get('/', function(req, res, next) {
   new_user.save(function(err, new_user) {
     if (err) return console.error(err);
 
-      var valid_url = conf.APP_PROTOCOL + "://"+conf.APP_DOMAIN+"/activate?id=" + new_user.user_id + "&key=" + new_user.email.valid_key;
+      var valid_url = conf.APP_PROTOCOL + "://"+conf.APP_DOMAIN+"/register/activate?id=" + new_user.user_id + "&key=" + new_user.email.valid_key;
 
       var mailOptions = {
         from: conf.APP_NAME + '<'+conf.MAIL.user+'>',
@@ -68,6 +67,9 @@ router.get('/', function(req, res, next) {
   });
 
 
+}).get("/activate", function(req, res, next) {
+    console.log(req.query);
+    res.send(req.query);
 });
 
 module.exports = router;
