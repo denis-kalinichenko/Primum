@@ -18,7 +18,7 @@ module.exports = function(mongoose, autoIncrement) {
         },
         activity: {
             last_seen: Date,
-            deleted: { type: Boolean, default: false }
+            deleted: Boolean
         },
         reg: Date,
         password: String
