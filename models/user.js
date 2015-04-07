@@ -11,7 +11,7 @@ var userSchema = new mongoose.Schema({
     },
     email: {
         main: String,
-        valid: Boolean,
+        valid: {type: Boolean, default: false},
         valid_key: String
     },
     userpic: { //TODO npm mongoose-file

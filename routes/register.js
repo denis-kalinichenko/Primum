@@ -57,7 +57,7 @@ router.get('/', function(req, res, next) {
       transporter.sendMail(mailOptions, function(error, info){
         if(error){
           console.log(error);
-        }else{
+        } else {
           console.log('Message sent: ' + info.response);
         }
       });
@@ -68,8 +68,15 @@ router.get('/', function(req, res, next) {
 
 
 }).get("/activate", function(req, res, next) {
-    console.log(req.query);
-    res.send(req.query);
+
+    if(req.query.id && req.query.key) {
+        var query = { 'user_id': req.query.id, 'email.valid_key': req.query.key };
+        User.findOneAndUpdate(query, {  email: { valid: true, valid_key: undefined } }, {new: true}, function(err, user) {
+            res.redirect("/login");
+        });
+    } else {
+        res.redirect("/");
+    }
 });
 
 module.exports = router;
