@@ -7,8 +7,8 @@ module.exports = {
     APP_DOMAIN: 'localhost',
     APP_PROTOCOL: 'http',
     MAIL: {
-        service: 'Yandex',
-        user: 'kalini4enk0@yandex.com',
-        pass: 'technetium2014'
+        service: 'Gmail',
+        user: 'primumapp@gmail.com',
+        pass: 'PrimumApp2015'
     }
 };
