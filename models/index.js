@@ -5,12 +5,13 @@ module.exports = function(mongoose, autoIncrement) {
             first: String,
             last: String
         },
-        birthday: Date,
+        birthday: Date, //TODO remove it
         email: {
             main: String,
-            valid: Boolean
+            valid: Boolean,
+            valid_key: String
         },
-        sex: Number,
+        sex: Number, //TODO remove it
         userpic: {
             small: String,
             medium: String,
@@ -18,21 +19,22 @@ module.exports = function(mongoose, autoIncrement) {
         },
         activity: {
             last_seen: Date,
+            last_ip: String,
             deleted: Boolean
         },
         reg: Date,
-        password: String
+        password: String //TODO add MD5 hashing (npm install MD5)
     });
     userSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'user_id', startAt: 1 });
 
-    var validSchema = new mongoose.Schema({
+    var validSchema = new mongoose.Schema({ //TODO remove it
         user_id: Number,
         email: String,
         key: String
     });
     var models = {
         Users : mongoose.model('User', userSchema),
-        Valids : mongoose.model('Valid', validSchema)
+        Valids : mongoose.model('Valid', validSchema) //TODO remove it
     };
 
     return models;
