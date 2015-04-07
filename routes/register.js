@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var mongodb = require('mongodb');
+var md5 = require('MD5');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 mongoose.connect('mongodb://localhost/primum');
@@ -23,36 +23,29 @@ router.get('/', function(req, res, next) {
   res.render('register', { conf: conf, title: 'Register' });
 }).post('/', function(req, res, next) {
 
-  var new_user = new models.Users({
+    // all data ok!
+    var email_key = randomstring.generate();
+    var new_user = new models.Users({
     'username': req.body.login,
     name: {
       first: req.body.first_name,
       last: req.body.last_name
     },
-    birthday: new Date(req.body.birthday).toISOString(),
     email: {
-      main: req.body.email,
-      valid: false
+        main: req.body.email,
+        valid: false,
+        valid_key: email_key
     },
-    sex: req.body.sex,
-    reg: new Date(),
-    password: req.body.password
-  });
+    activity: {
+        reg: new Date()
+    },
+    password: md5(req.body.password)
+    });
 
   new_user.save(function(err, new_user) {
     if (err) return console.error(err);
 
-    var email_key = randomstring.generate();
-    var valid_url = conf.APP_PROTOCOL + "://"+conf.APP_DOMAIN+"/activate?id=" + new_user.user_id + "&key=" + email_key;
-
-    var new_valid = new models.Valids({ //TODO denormalize it !!!
-      user_id: new_user.user_id,
-      email: req.body.email,
-      key: email_key
-    });
-
-    new_valid.save(function(err, new_valid) {
-      if (err) return console.error(err);
+      var valid_url = conf.APP_PROTOCOL + "://"+conf.APP_DOMAIN+"/activate?id=" + new_user.user_id + "&key=" + new_user.email.valid_key;
 
       var mailOptions = {
         from: conf.APP_NAME + '<'+conf.MAIL.user+'>',
@@ -69,7 +62,7 @@ router.get('/', function(req, res, next) {
           console.log('Message sent: ' + info.response);
         }
       });
-    });
+
 
     res.send("data sent");
   });
