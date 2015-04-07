@@ -18,11 +18,11 @@ module.exports = function(mongoose, autoIncrement) {
             origin: String
         },
         activity: {
-            last_seen: Date,
+            last_seen: Date, //TODO create a 'last' field there
             last_ip: String,
             deleted: Boolean
         },
-        reg: Date,
+        reg: Date, //TODO move it into 'activity' field
         password: String //TODO add MD5 hashing (npm install MD5)
     });
     userSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'user_id', startAt: 1 });
