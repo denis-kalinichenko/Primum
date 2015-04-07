@@ -12,7 +12,7 @@ module.exports = function(mongoose, autoIncrement) {
             valid_key: String
         },
         sex: Number, //TODO remove it
-        userpic: {
+        userpic: { //TODO npm mongoose-file
             small: String,
             medium: String,
             origin: String
