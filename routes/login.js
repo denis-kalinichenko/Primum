@@ -9,19 +9,18 @@ var md5 = require('MD5');
 var conf = require('../conf');
 var randomstring = require("randomstring");
 
+
 var User = require('../models/user.js');
 
 
 router.get('/', function(req, res, next) {
     res.render('login', { conf: conf, title: 'Login' });
 }).post('/', function(req, res, next) {
-    var post = req.body;
-    if (post.login === 'denis' && post.password === '123') {
-        req.session.user_id = 1;
-        res.redirect('/my_secret_page');
-    } else {
-        res.send('Bad user/pass');
-    }
+    sess=req.session;
+    //In this we are assigning email to sess.email variable.
+    //email comes from HTML page.
+    sess.username=req.body.login;
+    res.end('done');
 });
 
 module.exports = router;
