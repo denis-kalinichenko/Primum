@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var conf = require('../conf');
 
-//var func = require('../func/auth.js');
 
 /* GET home page. */
 
