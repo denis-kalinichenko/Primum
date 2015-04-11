@@ -6,7 +6,7 @@ var router = express.Router();
 
 var mongoose = require('mongoose');
 var md5 = require('MD5');
-var conf = require('conf');
+var config = require('config');
 var randomstring = require("randomstring");
 
 
@@ -14,7 +14,7 @@ var User = require('models/user.js');
 
 
 router.get('/', function(req, res, next) {
-    res.render('login', { conf: conf, title: 'Login' });
+    res.render('login', { title: 'Login' });
 }).post('/', function(req, res, next) {
     var login = req.body.login;
     var password = req.body.password;

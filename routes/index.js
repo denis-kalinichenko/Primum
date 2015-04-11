@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var conf = require('conf');
+var config = require('config');
 
 
 /* GET home page. */
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
      */
     res.redirect('/chat');
   } else{
-    res.render('index', { title: conf.APP_NAME });
+    res.render('index', { title: config.get("name") });
   }
 
 }).get('/chat', function (req, res, next) {

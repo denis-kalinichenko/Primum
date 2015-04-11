@@ -1,0 +1,12 @@
+{
+  "name": "Primum",
+  "version": "0.0.1",
+  "domain": "localhost",
+  "protocol": "http",
+  "port": 80,
+  "mail": {
+    "service": "Gmail",
+    "user": "primumapp@gmail.com",
+    "pass": "PrimumApp2015"
+  }
+}

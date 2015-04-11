@@ -3,7 +3,7 @@ var router = express.Router();
 
 var mongoose = require('mongoose');
 var md5 = require('MD5');
-var conf = require('conf');
+var config = require('config');
 var randomstring = require("randomstring");
 var nodemailer = require('nodemailer');
 
@@ -11,15 +11,15 @@ var User = require('models/user.js');
 
 
 var transporter = nodemailer.createTransport({
-  service: conf.MAIL.service,
+  service: config.get("mail:service"),
   auth: {
-    user: conf.MAIL.user,
-    pass: conf.MAIL.pass
+    user: config.get("mail:user"),
+    pass: config.get("mail:pass")
   }
 });
 
 router.get('/', function(req, res, next) {
-  res.render('register', { conf: conf, title: 'Register' });
+  res.render('register', { title: 'Register' });
 }).post('/', function(req, res, next) {
 
     // all data ok!
@@ -44,10 +44,10 @@ router.get('/', function(req, res, next) {
   new_user.save(function(err, new_user) {
     if (err) return console.error(err);
 
-      var valid_url = conf.APP_PROTOCOL + "://"+conf.APP_DOMAIN+"/register/activate?id=" + new_user.user_id + "&key=" + new_user.email.valid_key;
+      var valid_url = config.get("protocol") + "://"+ config.get("domain") +"/register/activate?id=" + new_user.user_id + "&key=" + new_user.email.valid_key;
 
       var mailOptions = {
-        from: conf.APP_NAME + '<'+conf.MAIL.user+'>',
+        from: config.get("name") + '<'+config.get("mail:user")+'>',
         to: req.body.email,
         subject: 'Registration', //TODO global dictionary
         html: '<b>Hello, '+new_user.name.first+'</b> <br/>please, verify your e-mail address ' + req.body.email +'<br/>' +

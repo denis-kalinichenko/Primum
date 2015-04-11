@@ -13,7 +13,7 @@ var db = require("db");
 
 db.connect();
 
-var conf = require('conf');
+var config = require('config');
 
 var sess;
 var routes = require('./routes/index');
@@ -58,8 +58,8 @@ app.use('/login', login);
         console.log('user disconnected');
     });
 });*/
-http.listen(80, function(){
-    console.log('listening on *:80');
+http.listen(config.get('port'), function(){
+    console.log('listening on *:'+config.get('port'));
 });
 
 // catch 404 and forward to error handler
