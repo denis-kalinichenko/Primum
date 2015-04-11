@@ -3,11 +3,11 @@ var router = express.Router();
 
 var mongoose = require('mongoose');
 var md5 = require('MD5');
-var conf = require('../conf');
+var conf = require('conf');
 var randomstring = require("randomstring");
 var nodemailer = require('nodemailer');
 
-var User = require('../models/user.js');
+var User = require('models/user.js');
 
 
 var transporter = nodemailer.createTransport({

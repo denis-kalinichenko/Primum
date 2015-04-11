@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var conf = require('../conf');
+var conf = require('conf');
 
 
 /* GET home page. */
