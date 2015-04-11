@@ -14,6 +14,7 @@ var db = require("db");
 db.connect();
 
 var config = require('config');
+var log = require("libs/log")(module);
 
 var sess;
 var routes = require('./routes/index');
@@ -59,7 +60,7 @@ app.use('/login', login);
     });
 });*/
 http.listen(config.get('port'), function(){
-    console.log('listening on *:'+config.get('port'));
+    log.info('listening on *:'+config.get('port'));
 });
 
 // catch 404 and forward to error handler
