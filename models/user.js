@@ -37,7 +37,10 @@ var userSchema = new mongoose.Schema({
           seen: Date,
             ip: String
         },
-        reg: Date,
+        reg: {
+            type: Date,
+            default: Date.now
+        },
         deleted: Boolean
     },
     password: {

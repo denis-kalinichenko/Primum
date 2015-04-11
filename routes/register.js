@@ -35,9 +35,6 @@ router.get('/', function(req, res, next) {
         valid: false,
         valid_key: email_key
     },
-    activity: {
-        reg: new Date()
-    },
     password: md5(req.body.password)
     });
 
