@@ -4,6 +4,16 @@
   "domain": "localhost",
   "protocol": "http",
   "port": 80,
+  "mongoose": {
+    "uri": "mongodb://localhost/primum",
+    "options": {
+      "server": {
+        "socketOptions": {
+          "keepAlive": 1
+        }
+      }
+    }
+  },
   "mail": {
     "service": "Gmail",
     "user": "primumapp@gmail.com",

@@ -7,11 +7,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session'),
     MongoStore = require('connect-mongo')(session);
-var mongoose = require('mongoose');
-var autoIncrement = require('mongoose-auto-increment');
-var db = require("db");
+var mongoose = require('libs/mongoose');
 
-db.connect();
+
 
 var config = require('config');
 var log = require("libs/log")(module);
@@ -20,8 +18,6 @@ var sess;
 var routes = require('./routes/index');
 var register = require('./routes/register');
 var login = require('./routes/login');
-
-
 
 
 var app = express();
