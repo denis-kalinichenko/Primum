@@ -18,5 +18,15 @@
     "service": "Gmail",
     "user": "primumapp@gmail.com",
     "pass": "PrimumApp2015"
+  },
+  "session": {
+    "secret": "Gypsy2014",
+    "key": "sid",
+    "cookie": {
+      "path": "/",
+      "httpOnly": true,
+      "secure": false,
+      "maxAge": null
+    }
   }
 }

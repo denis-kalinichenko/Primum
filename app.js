@@ -37,10 +37,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-    secret: 'secretkeyssssssss',
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    resave: false,
-    saveUninitialized: true
+    secret: config.get("session:secret"),
+    key: config.get("session:key"),
+    cookie: config.get("session:cookie"),
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 

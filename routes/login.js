@@ -5,20 +5,32 @@ var express = require('express');
 var router = express.Router();
 
 var mongoose = require('mongoose');
-var md5 = require('MD5');
-var sha1 = require('sha1');
 var config = require('config');
 
-var User = require('models/user.js');
+var User = require('models/user').User;
+var AuthError = require('models/user').AuthError;
 
 
 router.get('/', function(req, res, next) {
     res.render('login', { title: 'Login' });
 }).post('/', function(req, res, next) {
-    var login = req.body.login;
+    var username = req.body.login;
     var password = req.body.password;
 
-    User.findOne({username: login}, function (err, user) {
+    User.authorize(username, password, function (err, user) {
+        if(err) {
+            if (err instanceof AuthError) {
+                return res.send(err.message);
+            } else {
+                next(err);
+            }
+        }
+
+        req.session.username = user.username;
+        res.redirect("/");
+    });
+
+/*    User.findOne({username: login}, function (err, user) {
         if (user) {
             if(user.password === md5(user.salt + sha1(password) + sha1(login))) {
                 sess=req.session;
@@ -32,7 +44,7 @@ router.get('/', function(req, res, next) {
         } else {
             res.send("user not exists");
         }
-    });
+    });*/
 
 
 });

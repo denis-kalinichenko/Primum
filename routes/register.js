@@ -8,7 +8,7 @@ var config = require('config');
 var randomstring = require("randomstring");
 var nodemailer = require('nodemailer');
 
-var User = require('models/user.js');
+var User = require('models/user').User;
 
 
 var transporter = nodemailer.createTransport({
