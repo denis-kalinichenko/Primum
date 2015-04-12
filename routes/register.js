@@ -3,6 +3,7 @@ var router = express.Router();
 
 var mongoose = require('mongoose');
 var md5 = require('MD5');
+var sha1 = require('sha1');
 var config = require('config');
 var randomstring = require("randomstring");
 var nodemailer = require('nodemailer');
@@ -24,18 +25,23 @@ router.get('/', function(req, res, next) {
 
     // all data ok!
     var email_key = randomstring.generate();
+
+    var salt = randomstring.generate();
+    var password = md5(salt + sha1(req.body.password) + sha1(req.body.login));
+
     var new_user = new User ({
-    'username': req.body.login,
-    name: {
-      first: req.body.first_name,
-      last: req.body.last_name
-    },
-    email: {
-        main: req.body.email,
-        valid: false,
-        valid_key: email_key
-    },
-    password: md5(req.body.password)
+        'username': req.body.login,
+        name: {
+          first: req.body.first_name,
+          last: req.body.last_name
+        },
+        email: {
+            main: req.body.email,
+            valid: false,
+            valid_key: email_key
+        },
+        password: password,
+        salt: salt
     });
 
   new_user.save(function(err, new_user) {
