@@ -3,6 +3,6 @@
 ###Environment variables
 
 ```
-NODE_PATH=C:\path\to\Primum
+NODE_PATH=.
 NODE_ENV=development
 ```
