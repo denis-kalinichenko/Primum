@@ -60,7 +60,8 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    contacts: mongoose.Schema.Types.Mixed
+    contacts: mongoose.Schema.Types.Mixed,
+    requests: mongoose.Schema.Types.Mixed
 });
 
 userSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'user_id', startAt: 1 });
@@ -166,6 +167,20 @@ userSchema.statics.confirmMail = function(post, callback) {
                 if (err) return callback(err);
                 callback(null, user);
             });
+        }
+    ], callback);
+};
+
+userSchema.statics.searchByUsername = function(username, select, callback) {
+    var User = this;
+
+    async.waterfall([
+        function(callback) {
+            var query = { 'username': username };
+            User.findOne(query, function(err, user) {
+                if (err) return callback(err);
+                callback(null, user);
+            }).select(select);
         }
     ], callback);
 };
