@@ -1,0 +1,13 @@
+#new_contact.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-dialog
+        .modal-content
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                h4#myModalLabel.modal-title New contact
+            .modal-body
+                .form-group
+                    input#usernameNewContact.form-control(type='text', placeholder='Enter username or email')
+            .modal-footer
+                button.btn.btn-primary(type='button' disabled='disabled') Search
+                button.btn.btn-default(type='button', data-dismiss='modal') Cancel

@@ -1,6 +1,8 @@
 extends layout
 block content
-    //h1 My Primum
-    //p= title
-    //p= username
-    //a(href='/logout') Logout
+    .row
+        .col-md-3
+            button.btn.btn-info.btn-lg.btn-block(type='button' data-toggle="modal" data-target="#new_contact") Add new contact
+        .col-md-9 col-md-9
+
+    include include/modal_contact

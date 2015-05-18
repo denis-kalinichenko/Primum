@@ -1,3 +1,4 @@
-(function() {
-    var socket = io();
-})();
+$(function() {
+    //var socket = io();
+
+});
