@@ -18,6 +18,7 @@ var sess;
 var routes = require('./routes/index');
 var register = require('./routes/register');
 var login = require('./routes/login');
+var chat = require('./routes/chat');
 
 
 var app = express();
@@ -50,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/register', register);
 app.use('/login', login);
+app.use('/chat', chat);
 
 /*io.on('connection', function(socket){
     console.log('a user connected');

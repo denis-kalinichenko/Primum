@@ -26,7 +26,6 @@ router.get('/', function(req, res, next) {
         req.session.username = user.username;
         res.redirect("/");
     });
-
 });
 
 module.exports = router;

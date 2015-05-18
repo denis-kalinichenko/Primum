@@ -18,18 +18,6 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: config.get("name") });
   }
 
-}).get('/chat', function (req, res, next) {
-  sess=req.session;
-  if(sess.username)
-  {
-    res.write('<h1>Hello '+sess.username+'</h1> ');
-    res.end('<a href="/logout">Logout</a>');
-  }
-  else
-  {
-    res.write(' <h1>Please login first.</h1> ');
-    res.end('<a href="/login">Login</a>');
-  }
 }).get('/logout', function (req, res, next) {
   req.session.destroy(function(err) {
     if (err) {
