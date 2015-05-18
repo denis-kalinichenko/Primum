@@ -59,7 +59,8 @@ var userSchema = new mongoose.Schema({
     salt: {
         type: String,
         required: true
-    }
+    },
+    contacts: mongoose.Schema.Types.Mixed
 });
 
 userSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'user_id', startAt: 1 });
@@ -93,7 +94,7 @@ userSchema.statics.authorize = function (username, password, callback) {
                     callback(new AuthError("Password incorrect."));
                 }
             } else {
-                callback(new AuthError("User exists."));
+                callback(new AuthError("User does not exist"));
             }
         }
     ], callback);
@@ -108,7 +109,7 @@ userSchema.statics.register = function(post, callback) {
         },
         function(user, callback) {
             if (user) {
-                callback(new AuthError("username must be uniq"));
+                callback(new AuthError("User with same username already exists"));
             } else {
 
                 var email_key = randomstring.generate();

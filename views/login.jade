@@ -3,8 +3,12 @@
 
 extends layout
 block content
-   h1 Primum
-   p= title
+   h1=title
+   if login_error
+      .alert.alert-danger(role='alert')
+         strong Login error.
+         br
+         | #{login_error}
    form(action='', method='post')
       .form-group
          label(for='login') Enter login

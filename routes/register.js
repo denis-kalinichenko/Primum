@@ -13,13 +13,23 @@ router.get('/', function(req, res, next) {
     User.register(req.body, function (err, user) {
         if(err) {
             if (err instanceof AuthError) {
-                return res.send(err.message);
+                return res.render('register', { title: 'Register', reg_error: err.message });
             } else {
                 next(err);
             }
         }
-
-        res.send("reg complete! email sent!");
+        User.authorize(req.body.username, req.body.password, function (err, user) {
+            if(err) {
+                if (err instanceof AuthError) {
+                    //return res.send(err.message);
+                    return res.render('login', { title: 'Login', login_error: err.message });
+                } else {
+                    next(err);
+                }
+            }
+            req.session.username = user.username;
+            res.redirect("/");
+        });
     });
 
 

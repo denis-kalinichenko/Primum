@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
     User.authorize(username, password, function (err, user) {
         if(err) {
             if (err instanceof AuthError) {
-                return res.send(err.message);
+                //return res.send(err.message);
+                return res.render('login', { title: 'Login', login_error: err.message });
             } else {
                 next(err);
             }

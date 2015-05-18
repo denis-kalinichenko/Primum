@@ -1,0 +1,25 @@
+block navbar
+    nav.navbar.navbar-default
+        .container-fluid
+            .navbar-header
+                a.navbar-brand(href='/') Primum
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                if logged
+                    ul.nav.navbar-nav.navbar-right
+                        li.dropdown
+                            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= session.username
+                                span.caret
+                            ul.dropdown-menu(role='menu')
+                                li
+                                    a(href='#') Settings
+                                li
+                                    a(href='#') About
+                                li.divider
+                                li
+                                    a(href='/logout') Sign Out
+
+                else
+                        a.btn.btn-default.navbar-btn.navbar-right(href='register') Sign Up
+                        ul.nav.navbar-nav.navbar-right
+                            li
+                                a(href='/login') Sign In
