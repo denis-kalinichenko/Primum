@@ -1,0 +1,34 @@
+#settings.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-dialog
+        .modal-content
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                h4#myModalLabel.modal-title Settings
+            .modal-body
+                form(method='post' action='/user/settings').panel.panel-default
+                    .panel-body
+                        h3 Profile
+                        .form-group
+                            label(for='new_first_name') First name
+                            input.form-control#new_first_name(name='new_first_name' placeholder='Enter new first name' value='Denis')
+                        .form-group
+                            label(for='new_last_name') Last name
+                            input.form-control#new_last_name(name='new_last_name' placeholder='Enter new last name' value='Kalinichenko')
+                        button.btn.btn-success(type='submit') Save
+                form(method='post' action='/user/settings').panel.panel-default
+                    .panel-body
+                        h3 Security
+                        .form-group
+                            label(for='old_password') Old password
+                            input.form-control#old_password(type='password' name='old_password' placeholder='Enter old password')
+                        .form-group
+                            label(for='new_password') New password
+                            input.form-control#new_password(type='password' name='new_password' placeholder='Enter new password')
+                        button.btn.btn-success(type='submit') Save
+                form(method='post' action='/user/settings').panel.panel-default
+                    .panel-body
+                        h3 Deactivate
+                        button.btn.btn-danger Deactivate Your Account
+            .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Close
