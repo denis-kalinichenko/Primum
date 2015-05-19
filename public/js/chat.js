@@ -10,7 +10,7 @@ $(function() {
 
     $("#searchContact").click(function () {
         $("#new_contact .modal-body .alert").remove();
-        $("#NC_res_box").addClass("hidden")
+        $("#NC_res_box").addClass("hidden");
         $.getJSON("/chat/search", { username: $("#usernameNewContact").val() }, function (data) {
             if(data.error) {
                 $('<div class="alert alert-danger">'+data.error_msg+'</div>').insertBefore("#new_contact .modal-body .form-group");
@@ -25,8 +25,27 @@ $(function() {
         });
     });
 
+    $("textarea#msg").keypress(function(event) {
+        if (event.keyCode  == 13) {
+            event.preventDefault();
+            $("form#formMsg").submit();
+        }
+    });
+    $("form#formMsg").submit(function(event) {
+        event.preventDefault();
+        alert("submit");
+    });
+
 });
 
+function sendMsg($input) {
+    var text = $input.val();
+    text = text.trim();
+    if(text !="") {
+        $input.val("");
+        console.log(text);
+    }
+}
 
 function sendRequestToUser(id) {
     var request = $.ajax({

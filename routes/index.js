@@ -6,8 +6,7 @@ var config = require('config');
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  sess=req.session;
-  if(sess.username)
+  if(req.user)
   {
     res.redirect('/chat');
   } else{

@@ -7,7 +7,7 @@ block navbar
                 if logged
                     ul.nav.navbar-nav.navbar-right
                         li.dropdown
-                            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= session.username
+                            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= user.username
                                 span.caret
                             ul.dropdown-menu(role='menu')
                                 li

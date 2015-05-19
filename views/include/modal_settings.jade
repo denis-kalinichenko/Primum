@@ -11,10 +11,10 @@
                         h3 Profile
                         .form-group
                             label(for='new_first_name') First name
-                            input.form-control#new_first_name(name='new_first_name' placeholder='Enter new first name' value='Denis')
+                            input.form-control#new_first_name(name='new_first_name' placeholder='Enter new first name' value='#{user.name.first}')
                         .form-group
                             label(for='new_last_name') Last name
-                            input.form-control#new_last_name(name='new_last_name' placeholder='Enter new last name' value='Kalinichenko')
+                            input.form-control#new_last_name(name='new_last_name' placeholder='Enter new last name' value='#{user.name.last}')
                         button.btn.btn-success(type='submit') Save
                 form(method='post' action='/user/settings').panel.panel-default
                     .panel-body

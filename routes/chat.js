@@ -8,7 +8,7 @@ var AuthError = require('models/user').AuthError;
 var checkAuth = require('middleware/checkAuth');
 
 router.get('/', checkAuth, function(req, res, next) {
-    res.render('chat', { title: 'Primum', logged: true, session: req.session });
+    res.render('chat', { title: 'Primum', logged: true, user: req.user });
 }).get('/search', checkAuth, function(req, res, next) {
     if(req.query.username == req.session.username) {
         var result = {

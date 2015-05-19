@@ -11,3 +11,7 @@ a {
 .lead {
   margin: 0 !important;
 }
+
+#msgsBox {
+  @include calc(height, "100vh - 230px");
+}
