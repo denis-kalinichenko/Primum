@@ -3,19 +3,46 @@ block content
     .row
         .col-md-3.col-xs-4
             button.btn.btn-info.btn-lg.btn-block(type='button' data-toggle="modal" data-target="#new_contact") Add new contact
-        .col-md-9.col-xs-8
-            #msgsBox.panel.panel-default
+            br
+            .panel.panel-default
                 .panel-body
-                    .alert.alert-success
-                        strong Denis
-                        p test sniofnsdiofsdpojfposdfjposdf
-                    .alert.alert-info
-                        strong Pavel
-                        p sniofnsdiofsdpojfposdfjposdf
-            form(method='post' action='/chat/send')#formMsg
-                .form-group
-                    textarea.form-control(rows='3' placeholder='Type message here...')#msg
-                button.btn.btn-primary(type='submit') Send
+                    ul.nav.nav-pills.nav-stacked(role="tablist")
+                        li(role="presentation").active
+                            a(href='#veronika' aria-controls="veronika" role="tab" data-toggle="tab") Veronika Fefilova
+                        li(role="presentation")
+                            a(href='#durov' aria-controls="durov" role="tab" data-toggle="tab") Pavel Durov
+        .col-md-9.col-xs-8
+            .tab-content
+                #veronika.tab-pane.active(role='tabpanel')
+                    .msgsBox.panel.panel-default
+                        .panel-body
+                            .alert.alert-success
+                                strong Denis
+                                p test sniofnsdiofsdpojfposdfjposdf
+                            .alert.alert-info
+                                strong Veronika
+                                p sniofnsdiofsdpojfposdfjposdf
+                    form(method='post' action='/chat/send').formMsg
+                        .form-group
+                            textarea.form-control(rows='3' placeholder='Type message here...' tabindex=1)#msg
+                        button.btn.btn-primary(type='submit') Send
+
+                #durov.tab-pane(role='tabpanel')
+                    .msgsBox.panel.panel-default
+                        .panel-body
+                            .alert.alert-success
+                                strong Denis
+                                p test sniofnsdiofsdpojfposdfjposdf
+                            .alert.alert-success
+                                strong Denis
+                                p test
+                            .alert.alert-info
+                                strong Pavel
+                                p sniofnsdiofsdpojfposdfjposdf
+                    form(method='post' action='/chat/send').formMsg
+                        .form-group
+                            textarea.form-control(rows='3' placeholder='Type message here...' tabindex=1)#msg
+                        button.btn.btn-primary(type='submit') Send
     include include/modal_contact
     include include/modal_about
     include include/modal_settings

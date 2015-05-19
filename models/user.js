@@ -1,8 +1,3 @@
-/*var mongoose = require('mongoose');
-var autoIncrement = require('mongoose-auto-increment');
-var db = mongoose.connection;
-autoIncrement.initialize(db);*/
-
 var autoIncrement = require('mongoose-auto-increment');
 var mongoose = require('libs/mongoose');
 var db = mongoose.connection;
@@ -21,17 +16,25 @@ var userSchema = new mongoose.Schema({
     username: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        trim: true
     },
     name: {
-        first: String,
-        last: String
+        first: {
+            type: String,
+            trim: true
+        },
+        last: {
+            type: String,
+            trim: true
+        }
     },
     email: {
         main: {
             type: String,
             unique: true,
-            required: true
+            required: true,
+            trim: true
         },
         valid: {type: Boolean, default: false},
         valid_key: String
@@ -59,9 +62,7 @@ var userSchema = new mongoose.Schema({
     salt: {
         type: String,
         required: true
-    },
-    contacts: mongoose.Schema.Types.Mixed,
-    requests: mongoose.Schema.Types.Mixed
+    }
 });
 
 userSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'user_id', startAt: 1 });

@@ -28,22 +28,25 @@ $(function() {
     $("textarea#msg").keypress(function(event) {
         if (event.keyCode  == 13) {
             event.preventDefault();
-            $("form#formMsg").submit();
+            $("form.formMsg").submit();
         }
     });
-    $("form#formMsg").submit(function(event) {
+    $("form.formMsg").submit(function(event) {
         event.preventDefault();
-        alert("submit");
+        sendMsg();
     });
 
 });
 
-function sendMsg($input) {
+function sendMsg() {
+    var $input = $("textarea#msg");
     var text = $input.val();
     text = text.trim();
     if(text !="") {
         $input.val("");
         console.log(text);
+    } else {
+        $input.focus();
     }
 }
 

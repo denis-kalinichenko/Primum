@@ -4,10 +4,11 @@
             .modal-header
                 button.close(type='button', data-dismiss='modal', aria-label='Close')
                     span(aria-hidden='true') &times;
-                h4#myModalLabel.modal-title New contact
+                h4#myModalLabel.modal-title Search new contact
             .modal-body
-                .form-group
-                    input#usernameNewContact.form-control(type='text', placeholder='Enter username or email')
+                .form-group.input-group
+                    span#sizing-addon2.input-group-addon @
+                    input#usernameNewContact.form-control(type='text', placeholder='username' aria-describedby="sizing-addon2")
                 .row.hidden#NC_res_box
                     .col-md-1.col-xs-1.text-right
                         span.glyphicon.glyphicon-user(aria-hidden="true").lead
