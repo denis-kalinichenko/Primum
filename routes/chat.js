@@ -40,8 +40,6 @@ router.get('/', checkAuth, function(req, res, next) {
             return res.send(JSON.stringify(result));
         }
     });
-}).post('/add', checkAuth, function(req, res, next) {
-    res.send(req.body.id);
 });
 
 module.exports = router;

@@ -52,10 +52,10 @@ function sendMsg() {
 
 function sendRequestToUser(id) {
     var request = $.ajax({
-        url: "/chat/add",
+        url: "/user/add",
         method: "POST",
-        data: { id: id },
-        dataType: "json"
+        data: { id: id }
+        //dataType: "json"
     });
 
     request.done(function( msg ) {
