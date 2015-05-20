@@ -104,6 +104,19 @@ friendshipSchema.statics.declineRequest = function(id, callback) {
 };
 
 
+friendshipSchema.statics.getFriends = function(id, callback) {
+    var Friendship = this;
+
+    async.waterfall([
+        function(callback) {
+            Friendship.find({ $or: [{"users.to": id, confirmed: true } , {"users.from": id, confirmed: true }] }).exec(callback);
+        },
+        function(friendships, callback) {
+            callback(null, friendships);
+        }
+    ], callback);
+};
+
 exports.Friendship = mongoose.model('Friendship', friendshipSchema);
 
 
