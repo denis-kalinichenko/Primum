@@ -13,8 +13,9 @@ router.get('/', function(req, res, next) {
 }).post('/', function(req, res, next) {
     var username = req.body.login;
     var password = req.body.password;
+    var ip = req.connection.remoteAddress;
 
-    User.authorize(username, password, function (err, user) {
+    User.authorize(username, password, ip, function (err, user) {
         if(err) {
             if (err instanceof AuthError) {
                 //return res.send(err.message);

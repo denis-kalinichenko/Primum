@@ -12,10 +12,10 @@ block navbar
                         each item in friendsRequests
                             .request_item(data-id='#{item.id}' data-uid='#{item.users.from}')
                                 .sender_name
-                                button.btn.btn-success.btn-xs.confirm_request(type='button')
+                                button.btn.btn-success.btn-xs(type='button' onclick='confirm_request(#{item.id})')
                                     span.glyphicon.glyphicon-ok-sign(aria-hidden="true")
                                     | &nbsp; Confirm
-                                button.btn.btn.btn-danger.btn-xs.decline_request(type='button')
+                                button.btn.btn.btn-danger.btn-xs.decline_request(type='button' onclick='decline_request(#{item.id})')
                                     span.glyphicon.glyphicon-remove-sign(aria-hidden="true")
                                     | &nbsp; Decline
                 ul.nav.navbar-nav.navbar-right

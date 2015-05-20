@@ -6,8 +6,6 @@ var util = require("util");
 var async = require("async");
 var config = require('config');
 
-var User = require('models/user').User;
-var AuthError = require('models/user').AuthError;
 
 
 var friendshipSchema = new mongoose.Schema({
@@ -76,6 +74,31 @@ friendshipSchema.statics.getFriendsRequests = function(id, callback) {
         },
         function(friendships, callback) {
             callback(null, friendships);
+        }
+    ], callback);
+};
+
+friendshipSchema.statics.confirmRequest = function(id, callback) {
+    var Friendship = this;
+
+    async.waterfall([
+        function(callback) {
+            Friendship.findOneAndUpdate({ id: id }, { confirmed: true }, {new: true}, function(err, friendship) {
+                if (err) return callback(err);
+                callback(null, friendship);
+            });
+        }
+    ], callback);
+};
+friendshipSchema.statics.declineRequest = function(id, callback) {
+    var Friendship = this;
+
+    async.waterfall([
+        function(callback) {
+            Friendship.findOneAndRemove({ id: id }, function(err, friendship) {
+                if (err) return callback(err);
+                callback(null, friendship);
+            });
         }
     ], callback);
 };

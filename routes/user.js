@@ -26,6 +26,32 @@ router.get('/', checkAuth, function(req, res, next) {
         }
         res.send("request sent");
     });
+}).get('/confirm', checkAuth, function(req, res, next) {
+    if(req.query.id) {
+        Friendship.confirmRequest(req.query.id, function(err, friendship) {
+            if(err) {
+                next(err);
+            }
+            var result = {
+                status: 1,
+                text: "User now is your friend"
+            };
+            res.send(JSON.stringify(result));
+        });
+    }
+}).get('/decline', checkAuth, function(req, res, next) {
+    if(req.query.id) {
+        Friendship.declineRequest(req.query.id, function(err, friendship) {
+            if(err) {
+                next(err);
+            }
+            var result = {
+                status: 1,
+                text: "Request removed"
+            };
+            res.send(JSON.stringify(result));
+        });
+    }
 }).get('/id/:id', checkAuth, function(req, res, next) {
     var id = req.params.id;
     User.findById(id, "user_id name username -_id", function(err, user) {

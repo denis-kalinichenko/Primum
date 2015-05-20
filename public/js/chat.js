@@ -1,13 +1,14 @@
 $(function() {
     //var socket = io();
 
-    $("#friendsRequests .request_item").each(function(e) {
+    $(".request_item").each(function(e) {
         var id = $(this).data("uid");
         var $item = $(this);
         $.getJSON("/user/id/"+id, function(user) {
             $item.find(".sender_name").text(user.name.first + " " +user.name.last);
         });
     });
+
     $("#friendsRequestsShow").popover({
         html: true,
         content: function() {
@@ -52,6 +53,24 @@ $(function() {
     });
 
 });
+
+function confirm_request(id) {
+    $.getJSON('/user/confirm', { id: id }, function(data) {
+        if(data.status) {
+            alert(data.text);
+            $(".request_item[data-id='"+id+"']").remove();
+        }
+    });
+}
+
+function decline_request(id) {
+    $.getJSON('/user/decline', { id: id }, function(data) {
+        if(data.status) {
+            alert(data.text);
+            $(".request_item[data-id='"+id+"']").remove();
+        }
+    });
+}
 
 function sendMsg() {
     var $input = $("textarea#msg");

@@ -81,7 +81,7 @@ userSchema.virtual('password').set(function(password) {
         this.hashedPassword = this.encryptPassword(password);
     }).get(function() { return this._plainPassword; });
 
-userSchema.statics.authorize = function (username, password, callback) {
+userSchema.statics.authorize = function (username, password, ip, callback) {
     var User = this;
 
     async.waterfall([
@@ -98,6 +98,18 @@ userSchema.statics.authorize = function (username, password, callback) {
             } else {
                 callback(new AuthError("User does not exist"));
             }
+        },
+        function(user, callback) {
+            user.activity.last.seen = Date.now();
+            user.activity.last.ip = ip;
+
+            user.save(function(err) {
+                if(!err) {
+                    callback(null, user);
+                } else {
+                    callback(new AuthError("Some auth problems."));
+                }
+            });
         }
     ], callback);
 };
