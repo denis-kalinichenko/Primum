@@ -6,6 +6,10 @@ var util = require("util");
 var async = require("async");
 var config = require('config');
 
+var User = require('models/user').User;
+var AuthError = require('models/user').AuthError;
+
+
 var friendshipSchema = new mongoose.Schema({
     users: {
         from: {
@@ -41,21 +45,11 @@ friendshipSchema.statics.sendRequest = function(from, to, callback) {
 
     async.waterfall([
         function(callback) {
-            Friendship.findOne({ "users.from": from, "users.to": to }, callback);
+            Friendship.findOne({ $or: [{"users.to": from, "users.from": to} , {"users.from": from, "users.to": to}] }).exec(callback);
         },
         function(friendship, callback) {
             if (friendship) {
-                callback(new FriendError("They are friends"));
-            } else {
-                callback(null);
-            }
-        },
-        function(callback) {
-            Friendship.findOne({ "users.to": from, "users.from": to }, callback);
-        },
-        function(friendship, callback) {
-            if (friendship) {
-                callback(new FriendError("They are friends"));
+                callback(new FriendError("It is your friend or request not confirmed yet."));
             } else {
                 console.log("4");
                 var friendship = new Friendship({
@@ -73,6 +67,18 @@ friendshipSchema.statics.sendRequest = function(from, to, callback) {
     ], callback);
 };
 
+friendshipSchema.statics.getFriendsRequests = function(id, callback) {
+    var Friendship = this;
+
+    async.waterfall([
+        function(callback) {
+            Friendship.find({ "users.to": id, confirmed: false }, callback);
+        },
+        function(friendships, callback) {
+            callback(null, friendships);
+        }
+    ], callback);
+};
 
 
 exports.Friendship = mongoose.model('Friendship', friendshipSchema);

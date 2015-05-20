@@ -1,5 +1,20 @@
 $(function() {
     //var socket = io();
+
+    $("#friendsRequests .request_item").each(function(e) {
+        var id = $(this).data("uid");
+        var $item = $(this);
+        $.getJSON("/user/id/"+id, function(user) {
+            $item.find(".sender_name").text(user.name.first + " " +user.name.last);
+        });
+    });
+    $("#friendsRequestsShow").popover({
+        html: true,
+        content: function() {
+            return $("#friendsRequests").html();
+        }
+    });
+
     $("#usernameNewContact").keypress(function() {
         if($(this).val()!="") {
             $("#searchContact").prop("disabled", false);

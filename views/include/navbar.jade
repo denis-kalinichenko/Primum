@@ -3,23 +3,37 @@ block navbar
         .container-fluid
             .navbar-header
                 a.navbar-brand(href='/') Primum
-            #bs-example-navbar-collapse-1.collapse.navbar-collapse
-                if logged
-                    ul.nav.navbar-nav.navbar-right
-                        li.dropdown
-                            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= user.username
-                                span.caret
-                            ul.dropdown-menu(role='menu')
-                                li
-                                    a(href='#' data-toggle="modal" data-target="#settings") Settings
-                                li
-                                    a(href='#' data-toggle="modal" data-target="#about") About
-                                li.divider
-                                li
-                                    a(href='/logout') Sign Out
-
-                else
-                        a.btn.btn-default.navbar-btn.navbar-right(href='register') Sign Up
-                        ul.nav.navbar-nav.navbar-right
+            //#bs-example-navbar-collapse-1.collapse.navbar-collapse
+            if logged
+                if friendsRequests._lenght > 0
+                    a#friendsRequestsShow.btn.btn-link.navbar-btn(href="#" role="popover" data-toggle="popover" title="Friends Requests" data-placement="bottom") Requests &nbsp;
+                        span.badge= friendsRequests._lenght
+                    #friendsRequests.hidden
+                        each item in friendsRequests
+                            .request_item(data-id='#{item.id}' data-uid='#{item.users.from}')
+                                .sender_name
+                                button.btn.btn-success.btn-xs.confirm_request(type='button')
+                                    span.glyphicon.glyphicon-ok-sign(aria-hidden="true")
+                                    | &nbsp; Confirm
+                                button.btn.btn.btn-danger.btn-xs.decline_request(type='button')
+                                    span.glyphicon.glyphicon-remove-sign(aria-hidden="true")
+                                    | &nbsp; Decline
+                ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= user.username
+                            | &nbsp;
+                            span.caret
+                        ul.dropdown-menu(role='menu')
                             li
-                                a(href='/login') Sign In
+                                a(href='#' data-toggle="modal" data-target="#settings") Settings
+                            li
+                                a(href='#' data-toggle="modal" data-target="#about") About
+                            li.divider
+                            li
+                                a(href='/logout') Sign Out
+
+            else
+                    a.btn.btn-default.navbar-btn.navbar-right(href='register') Sign Up
+                    ul.nav.navbar-nav.navbar-right
+                        li
+                            a(href='/login') Sign In

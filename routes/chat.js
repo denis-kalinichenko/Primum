@@ -8,7 +8,7 @@ var AuthError = require('models/user').AuthError;
 var checkAuth = require('middleware/checkAuth');
 
 router.get('/', checkAuth, function(req, res, next) {
-    res.render('chat', { title: 'Primum', logged: true, user: req.user });
+    res.render('chat', { title: 'Primum', logged: true, user: req.user, friendsRequests: req.friendsRequests });
 }).get('/search', checkAuth, function(req, res, next) {
     if(req.query.username == req.session.username) {
         var result = {
@@ -17,7 +17,7 @@ router.get('/', checkAuth, function(req, res, next) {
         };
         return res.send(JSON.stringify(result));
     }
-    User.searchByUsername(req.query.username, "user_id name username -_id ", function(err, user) {
+    User.findByUsername(req.query.username, "user_id name username -_id ", function(err, user) {
         if(err) {
             if (err instanceof AuthError) {
                 return res.send(err.message);

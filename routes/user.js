@@ -16,7 +16,6 @@ var checkAuth = require('middleware/checkAuth');
 router.get('/', checkAuth, function(req, res, next) {
     res.send("user module");
 }).post('/add', checkAuth, function(req, res, next) {
-    //res.send("addded"+req.body.id);
     Friendship.sendRequest(req.user.user_id, req.body.id, function(err, friendship) {
         if(err) {
             if (err instanceof FriendError) {
@@ -25,8 +24,27 @@ router.get('/', checkAuth, function(req, res, next) {
                 next(err);
             }
         }
-
-        console.dir(friendship);
+        res.send("request sent");
+    });
+}).get('/id/:id', checkAuth, function(req, res, next) {
+    var id = req.params.id;
+    User.findById(id, "user_id name username -_id", function(err, user) {
+        if(err) {
+            next(err);
+        }
+        if(user != null) {
+            var result = {
+                user_id: user.user_id,
+                username: user.username,
+                name: user.name
+            };
+        } else {
+            var result = {
+                "error": 1,
+                "error_msg": "Cannot find user"
+            };
+        }
+        return res.send(JSON.stringify(result));
     });
 });
 

@@ -172,12 +172,26 @@ userSchema.statics.confirmMail = function(post, callback) {
     ], callback);
 };
 
-userSchema.statics.searchByUsername = function(username, select, callback) {
+userSchema.statics.findByUsername = function(username, select, callback) {
     var User = this;
 
     async.waterfall([
         function(callback) {
             var query = { 'username': username };
+            User.findOne(query, function(err, user) {
+                if (err) return callback(err);
+                callback(null, user);
+            }).select(select);
+        }
+    ], callback);
+};
+
+userSchema.statics.findById = function(id, select, callback) {
+    var User = this;
+
+    async.waterfall([
+        function(callback) {
+            var query = { 'user_id': id };
             User.findOne(query, function(err, user) {
                 if (err) return callback(err);
                 callback(null, user);
