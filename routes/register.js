@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
                 next(err);
             }
         }
-        User.authorize(req.body.username, req.body.password, function (err, user) {
+        User.authorize(req.body.username, req.body.password, req.connection.remoteAddress, function (err, user) {
             if(err) {
                 if (err instanceof AuthError) {
                     //return res.send(err.message);
