@@ -5,10 +5,15 @@ var config = require('config');
 var User = require('models/user').User;
 var AuthError = require('models/user').AuthError;
 
+var Friendship = require('models/friendship').Friendship;
+
 var checkAuth = require('middleware/checkAuth');
 
 router.get('/', checkAuth, function(req, res, next) {
-    res.render('chat', { title: 'Primum', logged: true, user: req.user, friendsRequests: req.friendsRequests });
+    var friends = false;
+    Friendship.getFriends(req.user.user_id, function(err, friends) {
+        res.render('chat', { title: 'Primum', logged: true, user: req.user, friendsRequests: req.friendsRequests, friends: friends });
+    });
 }).get('/search', checkAuth, function(req, res, next) {
     if(req.query.username == req.session.username) {
         var result = {

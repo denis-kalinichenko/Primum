@@ -67,6 +67,17 @@ var userSchema = new mongoose.Schema({
 
 userSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'user_id', startAt: 1 });
 
+if (!userSchema.options.toObject) userSchema.options.toObject = {};
+userSchema.options.toObject.transform = function (doc, ret, options) {
+    delete ret._id;
+    if(options.module == "friends") {
+        delete ret.activity.reg;
+        delete ret.activity.last.ip;
+        delete ret.email.valid_key;
+        delete ret.email.valid;
+    }
+};
+
 userSchema.methods.encryptPassword = function (password) {
     return md5(sha1(this.salt) + sha1(password));
 };

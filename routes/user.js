@@ -26,6 +26,11 @@ router.get('/', checkAuth, function(req, res, next) {
         }
         res.send("request sent");
     });
+}).get('/friends', checkAuth, function(req, res, next) {
+    Friendship.getFriends(req.user.user_id, function(err, friendships) {
+        if(err) { next(err); }
+        res.send(JSON.stringify(friendships));
+    });
 }).get('/confirm', checkAuth, function(req, res, next) {
     if(req.query.id) {
         Friendship.confirmRequest(req.query.id, function(err, friendship) {

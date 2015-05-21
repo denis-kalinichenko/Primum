@@ -6,7 +6,7 @@ var util = require("util");
 var async = require("async");
 var config = require('config');
 
-
+var User = require('models/user').User;
 
 var friendshipSchema = new mongoose.Schema({
     users: {
@@ -70,7 +70,7 @@ friendshipSchema.statics.getFriendsRequests = function(id, callback) {
 
     async.waterfall([
         function(callback) {
-            Friendship.find({ "users.to": id, confirmed: false }, callback);
+            Friendship.find({ "users.to": id, confirmed: false }, callback); //TODO add async loading user data (like 'getFriends')
         },
         function(friendships, callback) {
             callback(null, friendships);
@@ -103,16 +103,38 @@ friendshipSchema.statics.declineRequest = function(id, callback) {
     ], callback);
 };
 
-
-friendshipSchema.statics.getFriends = function(id, callback) {
+friendshipSchema.statics.getFriends = function(user_id, callback) {
     var Friendship = this;
 
     async.waterfall([
         function(callback) {
-            Friendship.find({ $or: [{"users.to": id, confirmed: true } , {"users.from": id, confirmed: true }] }).exec(callback);
+            Friendship.find({ $or: [{"users.to": user_id, confirmed: true } , {"users.from": user_id, confirmed: true }] }).exec(callback);
         },
         function(friendships, callback) {
-            callback(null, friendships);
+            if(friendships.length) {
+                var counter = 0;
+                var friends = [];
+                async.map(friendships, function (friendship, next) {
+                    var friend_id = (friendship.users.from == user_id) ? friendship.users.to : friendship.users.from;
+                    User.findById(friend_id, "username name userpic email activity -_id", function (err, user) {
+                        if(err) { callback(err) }
+                        var friend = {
+                            friendship_id: friendship.id,
+                            user: user.toObject({ module: "friends" })
+                        };
+
+                        friends.push(friend);
+
+                        counter++;
+                        if(counter == friendships.length) {
+                            // processing done
+                            callback(null, friends);
+                        }
+                    });
+                });
+            } else {
+                callback(null, false);
+            }
         }
     ], callback);
 };
