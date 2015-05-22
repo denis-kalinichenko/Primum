@@ -17,7 +17,8 @@ var userSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: true,
-        trim: true
+        trim: true,
+        lowercase: true
     },
     name: {
         first: {
@@ -34,7 +35,8 @@ var userSchema = new mongoose.Schema({
             type: String,
             unique: true,
             required: true,
-            trim: true
+            trim: true,
+            lowercase: true
         },
         valid: {type: Boolean, default: false},
         valid_key: String
