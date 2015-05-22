@@ -7,6 +7,9 @@ var AuthError = require('models/user').AuthError;
 
 var Friendship = require('models/friendship').Friendship;
 
+var Message = require('models/message').Message;
+var MsgError = require('models/message').MsgError;
+
 var checkAuth = require('middleware/checkAuth');
 
 router.get('/', checkAuth, function(req, res, next) {
