@@ -69,6 +69,9 @@ http.listen(config.get('port'), function(){
     log.info('listening on *:'+config.get('port'));
 });
 
+var io = require('socket')(http);
+app.set('io', io);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
