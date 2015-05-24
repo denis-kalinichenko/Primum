@@ -14,7 +14,7 @@ var mongoose = require('libs/mongoose');
 var config = require('config');
 var log = require("libs/log")(module);
 
-var sess;
+
 var routes = require('./routes/index');
 var register = require('./routes/register');
 var login = require('./routes/login');
@@ -38,13 +38,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+var sessionStore = require('libs/sessionStore');
+
 app.use(session({
     secret: config.get("session:secret"),
     key: config.get("session:key"),
     cookie: config.get("session:cookie"),
     resave: true,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    store: sessionStore
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
