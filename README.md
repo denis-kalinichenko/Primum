@@ -1,3 +1,14 @@
+#SOFT
+
+* [Node.js](http://nodejs.org/)
+* [npm](https://www.npmjs.com/)
+* [Ruby](http://rubyinstaller.org/)
+* [SASS](http://sass-lang.com/)
+* [Jade](http://jade-lang.com/)
+* [Bower](http://bower.io/)
+* [mongoDB](https://www.mongodb.org/)
+* [Git](https://git-scm.com/)
+
 #CONFIG
 
 ##Environment variables
