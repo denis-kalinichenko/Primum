@@ -9,13 +9,13 @@ block content
                     .panel-body
                         ul.nav.nav-pills.nav-stacked(role="tablist")
                             each friend, index in friends
-                                li(role="presentation")(class=(index===0 ? 'active' : ''))
+                                li(role="presentation" class=(index===0 ? 'active' : ''))
                                     a(href='##{friend.user.username}' aria-controls="#{friend.user.username}" role="tab" data-toggle="tab") #{friend.user.name.first} #{friend.user.name.last}
         .col-md-9.col-xs-8
             if friends
                 .tab-content
                     each friend, index in friends
-                        .tab-pane(role='tabpanel')(id=friend.user.username)(class=(index===0 ? 'active' : ''))
+                        .tab-pane(role='tabpanel' id=friend.user.username class=(index===0 ? 'active' : ''))
                             .msgsBox.panel.panel-default
                                 .panel-body
                                     .alert.alert-success
@@ -26,7 +26,7 @@ block content
                                         p sniofnsdiofsdpojfposdfjposdf
                             form(method='post' action='/chat/send').formMsg
                                 .form-group
-                                    textarea.form-control(rows='3' placeholder='Type message here...' data-uid='#{friend.user.user_id}' tabindex=1).textMsg
+                                    textarea.form-control(rows='3' placeholder='Type message here...' data-fid='#{friend.friendship_id}' tabindex=1).textMsg
                                 button.btn.btn-primary(type='submit').sendMsg Send
 
     include include/modal_contact

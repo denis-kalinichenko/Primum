@@ -51,7 +51,7 @@ $(function() {
         event.preventDefault();
         var $input =  $(this).find("textarea");
         var text = $input.val();
-        if(sendMsg(text, $input.data("uid"))) {
+        if(sendMsg(text, $input.data("fid"))) {
             $input.val("");
             $(this).parents(".tab-pane").find(".msgsBox .panel-body").append('<div class="alert alert-success"><strong>'+user_name_first+'</strong><p>'+text+'</p></div>');
         } else {
@@ -79,11 +79,11 @@ function decline_request(id) {
     });
 }
 
-function sendMsg(text, uid) {
+function sendMsg(text, fid) {
     text = text.trim();
     if(text == "") { return false; }
 
-    socket.emit('chat message', { text: text, for: uid }); //TODO backend event
+    socket.emit('chat message', { text: text, friendship_id: fid });
     return true;
 }
 

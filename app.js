@@ -49,6 +49,7 @@ app.use(session({
     saveUninitialized: true,
     store: sessionStore
 }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('middleware/loadUser'));
