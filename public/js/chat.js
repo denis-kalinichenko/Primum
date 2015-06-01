@@ -1,5 +1,5 @@
 $(function() {
-    //var socket = io();
+    var socket = io();
 
     $(".request_item").each(function(e) {
         var id = $(this).data("uid");
