@@ -116,7 +116,7 @@ friendshipSchema.statics.getFriends = function(user_id, callback) {
                 var friends = [];
                 async.map(friendships, function (friendship, next) {
                     var friend_id = (friendship.users.from == user_id) ? friendship.users.to : friendship.users.from;
-                    User.findById(friend_id, "username name userpic email activity -_id", function (err, user) {
+                    User.findById(friend_id, "user_id username name userpic email activity -_id", function (err, user) {
                         if(err) { callback(err) }
                         var friend = {
                             friendship_id: friendship.id,

@@ -1,5 +1,5 @@
+var socket = io();
 $(function() {
-    var socket = io();
 
     $(".request_item").each(function(e) {
         var id = $(this).data("uid");
@@ -41,15 +41,22 @@ $(function() {
         });
     });
 
-    $("textarea#msg").keypress(function(event) {
+    $("textarea.textMsg").keypress(function(event) {
         if (event.keyCode  == 13) {
             event.preventDefault();
-            $("form.formMsg").submit();
+            $(this).parents("form").submit();
         }
     });
     $("form.formMsg").submit(function(event) {
         event.preventDefault();
-        sendMsg();
+        var $input =  $(this).find("textarea");
+        var text = $input.val();
+        if(sendMsg(text, $input.data("uid"))) {
+            $input.val("");
+            $(this).parents(".tab-pane").find(".msgsBox .panel-body").append('<div class="alert alert-success"><strong>'+user_name_first+'</strong><p>'+text+'</p></div>');
+        } else {
+            $input.focus();
+        }
     });
 
 });
@@ -72,16 +79,12 @@ function decline_request(id) {
     });
 }
 
-function sendMsg() {
-    var $input = $("textarea#msg");
-    var text = $input.val();
+function sendMsg(text, uid) {
     text = text.trim();
-    if(text !="") {
-        $input.val("");
-        console.log(text);
-    } else {
-        $input.focus();
-    }
+    if(text == "") { return false; }
+
+    socket.emit('chat message', { text: text, for: uid }); //TODO backend event
+    return true;
 }
 
 function sendRequestToUser(id) {
