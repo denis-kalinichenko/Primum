@@ -43,3 +43,6 @@ npm install
 mongod
 node app.js
 ```
+
+#Version
+**0.0.9**
