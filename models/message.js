@@ -1,5 +1,6 @@
 var autoIncrement = require('mongoose-auto-increment');
 var mongoose = require('libs/mongoose');
+require('mongoose-strip-html-tags')(mongoose);
 var db = mongoose.connection;
 autoIncrement.initialize(db);
 var util = require("util");
@@ -19,7 +20,8 @@ var messageSchema = new mongoose.Schema({
     text: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        stripHtmlTags: true
     },
     sent: {
         type: Date,
@@ -45,6 +47,16 @@ messageSchema.statics.saveToDB = function (msg, callback) {
                 if (err) return callback(err);
                 callback(null, new_message);
             });
+        }
+    ], callback);
+};
+
+messageSchema.statics.findByFID = function(friendship_id, callback) {
+    var Message = this;
+
+    async.waterfall([
+        function(callback) {
+            Message.find({friendship_id: friendship_id}, callback);
         }
     ], callback);
 };

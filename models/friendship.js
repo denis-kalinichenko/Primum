@@ -7,6 +7,7 @@ var async = require("async");
 var config = require('config');
 
 var User = require('models/user').User;
+var Message = require('models/message').Message;
 
 var friendshipSchema = new mongoose.Schema({
     users: {
@@ -127,6 +128,25 @@ friendshipSchema.statics.getFriends = function(user_id, callback) {
 
                         counter++;
                         if(counter == friendships.length) {
+                            // processing done
+                            callback(null, friends);
+                        }
+                    });
+                });
+            } else {
+                callback(null, false);
+            }
+        }, function(friends, callback) {
+            if(friends) {
+                var counter = 0;
+                async.map(friends, function(friend, next) {
+                    Message.findByFID(friend.friendship_id,function(err, messages) {
+                        if(err) { callback(err) }
+
+                        friends[counter].messages = messages;
+
+                        counter++;
+                        if(counter == friends.length) {
                             // processing done
                             callback(null, friends);
                         }

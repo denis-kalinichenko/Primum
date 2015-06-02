@@ -12,6 +12,7 @@ a {
   margin: 0 !important;
 }
 
-#msgsBox {
+.msgsBox  {
   @include calc(height, "100vh - 230px");
+  overflow: auto;
 }

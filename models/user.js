@@ -1,5 +1,6 @@
 var autoIncrement = require('mongoose-auto-increment');
 var mongoose = require('libs/mongoose');
+require('mongoose-strip-html-tags')(mongoose);
 var db = mongoose.connection;
 autoIncrement.initialize(db);
 var randomstring = require("randomstring");
@@ -12,22 +13,26 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport(config.get("nodemailer"));
 
 
+
 var userSchema = new mongoose.Schema({
     username: {
         type: String,
         unique: true,
         required: true,
         trim: true,
-        lowercase: true
+        lowercase: true,
+        stripHtmlTags: true
     },
     name: {
         first: {
             type: String,
-            trim: true
+            trim: true,
+            stripHtmlTags: true
         },
         last: {
             type: String,
-            trim: true
+            trim: true,
+            stripHtmlTags: true
         }
     },
     email: {
@@ -36,7 +41,8 @@ var userSchema = new mongoose.Schema({
             unique: true,
             required: true,
             trim: true,
-            lowercase: true
+            lowercase: true,
+            stripHtmlTags: true
         },
         valid: {type: Boolean, default: false},
         valid_key: String

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var config = require('config');
 
+var async = require('async');
+
 var User = require('models/user').User;
 var AuthError = require('models/user').AuthError;
 
@@ -13,10 +15,15 @@ var MsgError = require('models/message').MsgError;
 var checkAuth = require('middleware/checkAuth');
 
 router.get('/', checkAuth, function(req, res, next) {
-    var friends = false;
-    Friendship.getFriends(req.user.user_id, function(err, friends) {
+
+    async.waterfall([
+        function(callback) {
+            Friendship.getFriends(req.user.user_id, callback);
+        }
+    ], function(err, friends) {
         res.render('chat', { title: 'Primum', logged: true, user: req.user, friendsRequests: req.friendsRequests, friends: friends });
     });
+
 }).get('/search', checkAuth, function(req, res, next) {
     if(req.query.username == req.session.username) {
         var result = {

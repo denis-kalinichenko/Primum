@@ -28,6 +28,8 @@ router.get('/', function(req, res, next) {
                 }
             }
             req.session.username = user.username;
+            req.session.user_id = user.user_id;
+            req.session.name = user.name;
             res.redirect("/");
         });
     });

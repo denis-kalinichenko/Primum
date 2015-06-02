@@ -1,6 +1,9 @@
 var socket = io();
 $(function() {
 
+
+    scrollArea();
+
     $(".request_item").each(function(e) {
         var id = $(this).data("uid");
         var $item = $(this);
@@ -54,12 +57,25 @@ $(function() {
         if(sendMsg(text, $input.data("fid"))) {
             $input.val("");
             $(this).parents(".tab-pane").find(".msgsBox .panel-body").append('<div class="alert alert-success"><strong>'+user_name_first+'</strong><p>'+text+'</p></div>');
+            scrollArea();
         } else {
             $input.focus();
         }
     });
 
+    socket.on('chat message', function(data){
+        $("textarea[data-fid='"+data.friendship_id+"']").parents(".tab-pane").find(".msgsBox .panel-body").append('<div class="alert alert-info"><strong>'+data.from.name.first+'</strong><p>'+data.text+'</p></div>');
+        scrollArea();
+    });
+
 });
+
+function scrollArea() {
+    $(".msgsBox").each(function() {
+        var height = $(this).find(".panel-body").height();
+        $(this).scrollTop(height);
+    });
+}
 
 function confirm_request(id) {
     $.getJSON('/user/confirm', { id: id }, function(data) {

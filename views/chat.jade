@@ -18,12 +18,14 @@ block content
                         .tab-pane(role='tabpanel' id=friend.user.username class=(index===0 ? 'active' : ''))
                             .msgsBox.panel.panel-default
                                 .panel-body
-                                    .alert.alert-success
-                                        strong= user.name.first
-                                        p test sniofnsdiofsdpojfposdfjposdf
-                                    .alert.alert-info
-                                        strong= friend.user.name.first
-                                        p sniofnsdiofsdpojfposdfjposdf
+                                    if friend.messages
+                                        each message, index in friend.messages
+                                            .alert(class=(message.from === user.user_id ? 'alert-success' : 'alert-info'))
+                                                if message.from == user.user_id
+                                                    strong= user.name.first
+                                                else
+                                                    strong= friend.user.name.first
+                                                p= message.text
                             form(method='post' action='/chat/send').formMsg
                                 .form-group
                                     textarea.form-control(rows='3' placeholder='Type message here...' data-fid='#{friend.friendship_id}' tabindex=1).textMsg
