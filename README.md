@@ -6,6 +6,7 @@
 * [SASS](http://sass-lang.com/)
 * [Jade](http://jade-lang.com/)
 * [Bower](http://bower.io/)
+* [Bourbon](http://bourbon.io/)
 * [mongoDB](https://www.mongodb.org/)
 * [Git](https://git-scm.com/)
 
@@ -29,6 +30,11 @@ File Watcher arguments
 --no-cache --update --style compressed
 ```
 
+#Bourbon
+```
+cd public/css
+bourbon install
+```
 
 #Run
 
@@ -36,4 +42,4 @@ File Watcher arguments
 npm install
 mongod
 node app.js
-````
+```
