@@ -1,8 +1,12 @@
 var socket = io();
+var blur = false;
+
 $(function() {
 
 
     scrollArea();
+
+    Notification.requestPermission();
 
     $(".request_item").each(function(e) {
         var id = $(this).data("uid");
@@ -66,9 +70,57 @@ $(function() {
     socket.on('chat message', function(data){
         $("textarea[data-fid='"+data.friendship_id+"']").parents(".tab-pane").find(".msgsBox .panel-body").append('<div class="alert alert-info"><strong>'+data.from.name.first+'</strong><p>'+data.text+'</p></div>');
         scrollArea();
+        push(data.from.name.first, data.text, data.friendship_id);
     });
 
 });
+
+if(/*@cc_on!@*/false) { // check for Internet Explorer
+    document.onfocusin = onFocus;
+    document.onfocusout = onBlur;
+} else {
+    window.onfocus = onFocus;
+    window.onblur = onBlur;
+}
+function onBlur() {
+    blur = true;
+}
+function onFocus(){
+    blur = false;
+}
+
+
+function push(author, text, id) {
+    if (!("Notification" in window)) {
+        // This browser does not support desktop notification
+    }
+    else if (Notification.permission === "granted" && blur) {
+        var notification = new Notification("1 new message from "+author, {
+            tag: id,
+            body: text,
+            lang: "en"
+        });
+        notification.onclick = function(x) {
+            try {
+                window.focus();
+                this.close();
+                this.cancel();
+            }
+            catch (ex) {
+            }
+        };
+        notification.onclose = function() {
+
+        };
+        notification.onshow = function () {
+
+        };
+    }
+
+    else if (Notification.permission !== 'denied') {
+        Notification.requestPermission();
+    }
+}
 
 function scrollArea() {
     $(".msgsBox").each(function() {
