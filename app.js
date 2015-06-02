@@ -40,15 +40,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 var sessionStore = require('libs/sessionStore');
-
-app.use(session({
+var sessionMiddleware = session({
     secret: config.get("session:secret"),
     key: config.get("session:key"),
     cookie: config.get("session:cookie"),
     resave: true,
     saveUninitialized: true,
     store: sessionStore
-}));
+});
+
+app.use(sessionMiddleware);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -60,17 +61,12 @@ app.use('/login', login);
 app.use('/chat', chat);
 app.use('/user', user);
 
-/*io.on('connection', function(socket){
-    console.log('a user connected');
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-    });
-});*/
+
 http.listen(config.get('port'), function(){
     log.info('listening on *:'+config.get('port'));
 });
 
-var io = require('socket')(http);
+var io = require('socket')(http, sessionMiddleware);
 app.set('io', io);
 
 // catch 404 and forward to error handler
