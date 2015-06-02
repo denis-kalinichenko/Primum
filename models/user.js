@@ -126,7 +126,8 @@ userSchema.statics.authorize = function (username, password, ip, callback) {
                 if(!err) {
                     callback(null, user);
                 } else {
-                    callback(new AuthError("Some auth problems."));
+                    //callback(null, user);
+                    callback(new AuthError(err)); //TODO fix ValidationError: Path `email.main` is required. for user_id 1
                 }
             });
         }
@@ -170,7 +171,8 @@ userSchema.statics.register = function(post, callback) {
 };
 
 userSchema.methods.sendConfirmMail = function(user) {
-    var confirm_url = config.get("protocol") + "://"+ config.get("domain") +"/register/activate?id=" + user.user_id + "&key=" + user.email.valid_key;
+    var port = (config.get("port") == 80) ? '' : ':' + config.get("port");
+    var confirm_url = config.get("protocol") + "://"+ config.get("domain") + port + "/register/activate?id=" + user.user_id + "&key=" + user.email.valid_key;
     var mailOptions = {
         from: config.get("name") + '<'+config.get("mail:user")+'>',
         to: user.email.main,

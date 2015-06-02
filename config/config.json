@@ -1,7 +1,7 @@
 {
   "name": "Primum",
   "version": "0.0.1",
-  "domain": "192.168.0.66",
+  "domain": "localhost",
   "protocol": "http",
   "port": 80,
   "mongoose": {
