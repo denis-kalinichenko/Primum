@@ -3,7 +3,7 @@
   "version": "0.0.9",
   "domain": "localhost",
   "protocol": "http",
-  "port": 80,
+  "port":3000,
   "mongoose": {
     "uri": "mongodb://localhost/primum",
     "options": {
