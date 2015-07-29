@@ -15,7 +15,7 @@
     }
   },
   "session": {
-    "secret": "Gypsy2014",
+    "secret": "secret",
     "key": "sid",
     "cookie": {
       "path": "/",
@@ -28,7 +28,7 @@
     "service": "Gmail",
     "auth" : {
       "user": "primumapp@gmail.com",
-      "pass": "PrimumApp2015"
+      "pass": "pass"
     }
   }
 }
